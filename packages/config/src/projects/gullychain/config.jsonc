@@ -1,0 +1,33 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "gullychain",
+  "import": ["../globalConfig.jsonc"],
+  // DRAFT for the mainnet listing. Discovery runs on Arbitrum One (arb1), where the mainnet rollup lives; the
+  // testnet rollup is on Arbitrum Sepolia, which discovery does not support. Fill in the mainnet addresses, then
+  // run `l2b discover gullychain --dev --max-depth 0` from packages/config and raise the depth one level at a time
+  // (packages/config/src/projects/AGENTS.md). Testnet equivalents (Arbitrum Sepolia, gully-ops/l3/generated/
+  // deployment.json and token-bridge.json): Bridge 0x2073106fd3fc844Bbde31f5Bf0BB91cf1e2d6C8A,
+  // RollupProxy 0x85D80C06Fa5334E8Cd1C51F3F39D477E5dc35E0D, SequencerInbox 0x483f77f692635d4D8a8147D0f732A016614Ce685,
+  // L1GatewayRouter 0xfbd7503009AB4ee5A1f980a2fCDEE4C7BEB6b2B9, L1ERC20Gateway 0x8E35E523bFd709d577A77F749c831cB045bCabd0,
+  // L1CustomGateway 0xA90752f7057dc1BFe2677f1791c5084535A4E42a, L1WethGateway 0xEB602d8Fc5F5d87DA629201905bE51885165EC4f,
+  // L1USDCGateway 0xF904064BE100489a200EB754E591362C7Ced2D5b, UpgradeExecutor 0x41dA5C69BbC157DA93020349FF6e39fDF440D8eC.
+  "initialAddresses": [
+    "arb1:0x0000000000000000000000000000000000000000", // TODO Bridge
+    "arb1:0x0000000000000000000000000000000000000000", // TODO RollupProxy
+    "arb1:0x0000000000000000000000000000000000000000", // TODO SequencerInbox
+    "arb1:0x0000000000000000000000000000000000000000", // TODO L1GatewayRouter
+    "arb1:0x0000000000000000000000000000000000000000", // TODO L1ERC20Gateway
+    "arb1:0x0000000000000000000000000000000000000000", // TODO L1WethGateway
+    "arb1:0x0000000000000000000000000000000000000000", // TODO L1USDCGateway
+    // the L3-side chain owner (UpgradeExecutor on Gully Chain) needs the "gullychain" discovery chain
+    "gullychain:0x0000000000000000000000000000000000000000" // TODO L3 UpgradeExecutor
+  ],
+  "names": {
+    "arb1:0x0000000000000000000000000000000000000000": "Bridge",
+    // TODO: one entry per address above, plus the Safe(s) that will own the UpgradeExecutor, e.g.
+    // "arb1:0x...": "Gully Chain Multisig"
+  },
+  "overrides": {
+    // Gully Chain posts batches as calldata to Arbitrum One (DataAvailabilityCommittee = false, rollup mode)
+  }
+}
